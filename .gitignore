@@ -65,6 +65,7 @@ Thumbs.db
 # Scipy/Numpy temporary files
 *.so
 *.pyd
+*.pdf
 
 # Documentation
 docs/_build/
