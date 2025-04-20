@@ -21,7 +21,7 @@ The application offers both a command-line interface and an interactive web inte
 
 You can try out the Recurrence Solver online:
 
-[Access the Recurrence Solver Web App](https://recurrence-solver.streamlit.app) *(Coming Soon)*
+[Access the Recurrence Solver Web App](https://recurrence-solver.streamlit.app)
 
 ## 🚀 Features
 
