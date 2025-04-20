@@ -3,23 +3,6 @@ from scipy.optimize import fsolve
 
 
 def akra_bazzi_method(a_values, b_values, k, p=1):
-    """
-    Applies the Akra-Bazzi method (Extended Master Theorem) to solve more general recurrence relations.
-    
-    The Akra-Bazzi method applies to recurrence relations of the form:
-    T(n) = g(n) + sum(a_i * T(n/b_i)) for i = 1 to k
-    
-    Where:
-    - a_values: list of coefficients for the subproblems [a_1, a_2, ..., a_k]
-    - b_values: list of factors by which input size is reduced [b_1, b_2, ..., b_k]
-    - k: exponent in the running time of the divide and combine steps (g(n) = O(n^k))
-    - p: characteristic constant (optional, default=1 for most cases)
-    
-    Returns:
-    - The asymptotic complexity as a string
-    - Explanation of the method application
-    """
-   
     
     # Check if input lengths match
     if len(a_values) != len(b_values):
@@ -52,15 +35,7 @@ def akra_bazzi_method(a_values, b_values, k, p=1):
 
 
 def print_akra_bazzi_result(a_values, b_values, k, p=1):
-    """
-    Prints a detailed explanation of the Akra-Bazzi method application.
-    
-    Parameters:
-    - a_values: list of coefficients for the subproblems
-    - b_values: list of factors by which input size is reduced
-    - k: exponent in the running time of the divide and combine steps
-    - p: characteristic constant (optional)
-    """
+
     try:
         complexity, p_value, comparison = akra_bazzi_method(a_values, b_values, k, p)
         

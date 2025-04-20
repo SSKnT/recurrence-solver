@@ -1,22 +1,6 @@
 import math
 
 def master_theorem(a, b, k):
-    """
-    Applies the Master Theorem to determine the time complexity of a divide-and-conquer algorithm.
-    
-    The Master Theorem applies to recurrence relations of the form:
-    T(n) = a * T(n/b) + O(n^k)
-    
-    Where:
-    - a: number of subproblems in the recursion
-    - b: factor by which input size is reduced in each subproblem
-    - k: exponent in the running time of the divide and combine steps
-    
-    Returns a tuple containing:
-    - The asymptotic complexity as a string (e.g., "O(n log n)")
-    - The case of the Master Theorem that was applied
-    - The comparison result between log_b(a) and k
-    """
     
     # Calculate log_b(a)
     log_b_a = math.log(a, b)
@@ -35,14 +19,7 @@ def master_theorem(a, b, k):
 
 
 def print_master_theorem_result(a, b, k):
-    """
-    Prints a detailed explanation of the Master Theorem application.
-    
-    Parameters:
-    - a: number of subproblems
-    - b: factor by which input size is reduced
-    - k: exponent in the combine step
-    """
+
     complexity, case, comparison = master_theorem(a, b, k)
     
     print(f"Recurrence relation: T(n) = {a} T(n/{b}) + Θ(n^{k})")

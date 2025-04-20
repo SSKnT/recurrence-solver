@@ -1,22 +1,7 @@
 import math
 
 def approximation_method(sizes, weights, k):
-    """
-    Approximation method for recurrences with subproblems of different sizes.
-    
-    This method uses both a lower bound (shallowest branch) and upper bound (deepest branch) approach
-    to estimate the complexity of a recurrence with different subproblem sizes.
-    
-    Parameters:
-    - sizes: list of fractions representing the subproblem sizes (e.g., [1/2, 1/3] for T(n/2) + T(n/3))
-    - weights: weights of each subproblem (normally 1 for each, but can be different)
-    - k: exponent in the running time of the combine step Θ(n^k)
-    
-    Returns a tuple containing:
-    - Lower bound complexity (from shallowest branch)
-    - Upper bound complexity (from deepest branch)
-    - Explanation string
-    """
+
     if not sizes or not weights or len(sizes) != len(weights):
         return "Error: Invalid input parameters"
     
@@ -69,14 +54,7 @@ def approximation_method(sizes, weights, k):
 
 
 def print_approximation_method_result(sizes, weights, k):
-    """
-    Prints a detailed explanation of the approximation method for varying subproblem sizes.
-    
-    Parameters:
-    - sizes: list of fractions representing the subproblem sizes
-    - weights: weights of each subproblem
-    - k: exponent in the combine step Θ(n^k)
-    """
+
     lower_bound, upper_bound, explanation = approximation_method(sizes, weights, k)
     
     # Print the recurrence relation
@@ -87,7 +65,7 @@ def print_approximation_method_result(sizes, weights, k):
         if weights[i] != 1:
             recurrence += f"{weights[i]}"
         
-        # Format the size as a fraction if it's a string fraction
+        # Format the size as fraction if its a string fraction
         if isinstance(sizes[i], str) and '/' in sizes[i]:
             recurrence += f"T(n/{sizes[i].split('/')[1]}) "
         else:
