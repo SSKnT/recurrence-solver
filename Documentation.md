@@ -6,9 +6,9 @@ This document outlines the design and implementation of our Recurrence Solver sy
 
 ## Team Members
 
-1. [Student Name 1] - [Registration Number]
-2. [Student Name 2] - [Registration Number] 
-3. [Student Name 3] - [Registration Number]
+1. Ali    - 2023-CS-711
+2. Junaid - 2023-CS-712 
+3. Sohaib - 2023-CS-740
 
 ## Problem Description
 
