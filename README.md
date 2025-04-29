@@ -104,7 +104,7 @@ The application implements various mathematical theorems for solving recurrence 
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/recurrence-solver/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/SSKnT/recurrence-solver/issues).
 
 ## 📄 License
 
@@ -112,4 +112,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Contact
 
-For any questions or feedback, please reach out via [GitHub issues](https://github.com/yourusername/recurrence-solver/issues).
+For any questions or feedback, please reach out via [GitHub issues](https://github.com/SSKnT/recurrence-solver/issues).
