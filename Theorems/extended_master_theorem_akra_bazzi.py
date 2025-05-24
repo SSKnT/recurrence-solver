@@ -45,3 +45,35 @@ def print_extended_master_result(a, b, k, i):
         print("Case 2: The subproblems and the combine step contribute equally.")
     else:
         print("Case 3: The combine step dominates.")
+
+# Sample test cases for extended master theorem
+
+print_extended_master_result(2, 2, 1, 0)
+# T(n) = 2 T(n/2) + Θ(n^1 (log n)^0) → Case 2
+
+print_extended_master_result(2, 2, 1, 2)
+# T(n) = 2 T(n/2) + Θ(n^1 (log n)^2) → Case 2
+
+print_extended_master_result(4, 2, 1, 1)
+# T(n) = 4 T(n/2) + Θ(n^1 (log n)^1) → Case 1
+
+print_extended_master_result(2, 2, 2, 1)
+# T(n) = 2 T(n/2) + Θ(n^2 (log n)^1) → Case 3
+
+print_extended_master_result(3, 3, 2, 1)
+# T(n) = 3 T(n/3) + Θ(n^2 (log n)^1) → Case 3
+
+print_extended_master_result(3, 3, 1.0, -1)
+# T(n) = 3 T(n/3) + Θ(n^1 (log n)^-1) → Case 2 (log log n)
+
+print_extended_master_result(3, 3, 1.0, -2)
+# T(n) = 3 T(n/3) + Θ(n^1 (log n)^-2) → Case 2 (log^(-2) n)
+
+print_extended_master_result(16, 2, 4, 0)
+# T(n) = 16 T(n/2) + Θ(n^4 (log n)^0) → Case 2
+
+print_extended_master_result(16, 2, 5, 3)
+# T(n) = 16 T(n/2) + Θ(n^5 (log n)^3) → Case 3
+
+print_extended_master_result(8, 2, 2, 5)
+# T(n) = 8 T(n/2) + Θ(n^2 (log n)^5) → Case 2
