@@ -29,3 +29,42 @@ def print_master_theorem_result(a, b, k):
         print("Case 2: The recursive work and the combine step contribute equally.")
     else:
         print("Case 3: The combine step dominates the recursive work.")
+
+master_test_cases = [
+    {
+        "a": 2,
+        "b": 2,
+        "k": 1,
+        "expected_case": 2,
+        "expected_complexity": "O(n^1.0 log n)"
+    },
+    {
+        "a": 3,
+        "b": 2,
+        "k": 1,
+        "expected_case": 3,
+        "expected_complexity": "O(n^1.5849)"
+    },
+    {
+        "a": 2,
+        "b": 2,
+        "k": 2,
+        "expected_case": 1,
+        "expected_complexity": "O(n^2.0)"
+    }
+]
+
+def run_master_test_cases():
+    for i, test in enumerate(master_test_cases):
+        print(f"Test Case {i + 1}:")
+        a = test["a"]
+        b = test["b"]
+        k = test["k"]
+        expected_case = test["expected_case"]
+        expected_complexity = test["expected_complexity"]
+
+        print_master_theorem_result(a, b, k)
+
+        print("-" * 50)
+
+run_master_test_cases()

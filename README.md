@@ -107,9 +107,6 @@ Where:
 - b > 0 (amount subtracted from input size)
 - k ≥ 0 (exponent in the combine step)
 
-Additionally, the project's documentation mentions support for other methods including:
-- **Akra-Bazzi Method** - For recurrences with multiple subproblems of different sizes
-- **Approximation Method** - For recurrences with subproblems of different sizes where other methods don't apply
 
 ## 📊 Examples
 
@@ -142,7 +139,6 @@ recurrence-solver/
     ├── master_theorem.py              # Standard Master Theorem
     ├── extended_master_theorem.py     # Extended Master Theorem with logarithmic factors
     ├── subtractive_master_theorem.py  # For decreasing recurrences T(n) = aT(n-b) + f(n)
-    └── other theorem implementations as referenced in documentation
 ```
 
 ## 📄 License

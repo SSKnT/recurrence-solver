@@ -1,4 +1,3 @@
-
 import streamlit as st
 import math
 from Theorems.master_theorem import master_theorem
@@ -42,51 +41,49 @@ def create_sidebar():
 def render_master_theorem():
     st.header("Master Theorem")
     st.markdown("""
-    The Master Theorem solves recurrence relations of the form:
-
-    \[
-    T(n) = a \cdot T\left(\frac{n}{b}\right) + \Theta(n^k)
-    \]
-
+    The Master Theorem is used for solving recurrence relations of the form:
+    
+    ### T(n) = a * T(n/b) + Θ(n^k)
+    
     Where:
-    - \(a \geq 1\): number of subproblems
-    - \(b > 1\): factor by which input size is reduced
-    - \(k \geq 0\): exponent in the combine step
+    - a ≥ 1: number of subproblems
+    - b > 1: factor by which the input size is reduced
+    - k ≥ 0: exponent in the combine step
     """)
-
+    
     col1, col2, col3 = st.columns(3)
-
+    
     with col1:
-        a = st.number_input("a (number of subproblems)", min_value=1.0, value=2.0, step=1.0, format="%.0f", key="master_a")
+        a = st.number_input("a (number of subproblems)", min_value=1.0, value=2.0, step=1.0)
     with col2:
-        b = st.number_input("b (size reduction factor)", min_value=1.1, value=2.0, step=0.1, format="%.2f", key="master_b")
+        b = st.number_input("b (size reduction factor)", min_value=1.1, value=2.0, step=0.1)
     with col3:
-        k = st.number_input("k (exponent in combine step)", min_value=0.0, value=1.0, step=0.1, format="%.2f", key="master_k")
-
+        k = st.number_input("k (exponent in combine step)", min_value=0.0, value=1.0, step=0.1)
+    
     if st.button("Solve using Master Theorem"):
         try:
             complexity, case, comparison = master_theorem(a, b, k)
-
-            st.success(f"**Time Complexity:** {complexity}")
-
+            
+            st.success(f"Time Complexity: {complexity}")
+            
+            # Create explanatory section
             st.subheader("Explanation")
             st.markdown(f"**Case {case}** applies: {comparison}")
-
-            log_b_a = math.log(a, b)
-
+            
             if case == 1:
-                st.markdown("**The recursive work dominates:** Recursive calls contribute more than the combine step.")
-                st.latex(fr"\log_{{{b:.2f}}}({int(a)}) = {log_b_a:.3f} > {k:.2f} \implies O(n^{{\log_{{{b:.2f}}}({int(a)})}})")
+                st.markdown("**The recursive work dominates**: The work done by recursive calls is more significant than the combine step.")
+                st.latex(r"\text{Since } \log_b(a) > k, \text{ the time complexity is } O(n^{\log_b(a)})")
             elif case == 2:
-                st.markdown("**The recursive work and combine step are comparable:** Both contribute equally.")
-                st.latex(fr"\log_{{{b:.2f}}}({int(a)}) = {log_b_a:.3f} = {k:.2f} \implies O(n^{k:.2f} \log n)")
+                st.markdown("**The recursive work and combine step are comparable**: Both contribute equally to the overall complexity.")
+                st.latex(r"\text{Since } \log_b(a) = k, \text{ the time complexity is } O(n^k \log n)")
             else:
-                st.markdown("**The combine step dominates:** The combine step contributes more than recursive calls.")
-                st.latex(fr"\log_{{{b:.2f}}}({int(a)}) = {log_b_a:.3f} < {k:.2f} \implies O(n^{k:.2f})")
-
+                st.markdown("**The combine step dominates**: The work to combine solutions is more significant than the recursive work.")
+                st.latex(r"\text{Since } \log_b(a) < k, \text{ the time complexity is } O(n^k)")
+            
+            # Display recurrence
             st.subheader("Recurrence Relation")
-            st.latex(f"T(n) = {int(a)} \\cdot T\\left(\\frac{{n}}{{{b:.2f}}}\\right) + \\Theta\\left(n^{{{k:.2f}}}\\right)")
-
+            st.latex(f"T(n) = {a} \cdot T(n/{b}) + \\Theta(n^{{{k}}})")
+            
         except Exception as e:
             st.error(f"Error solving the recurrence: {str(e)}")
 
@@ -94,52 +91,52 @@ def render_master_theorem():
 def render_extended_master_theorem():
     st.header("Extended Master Theorem")
     st.markdown("""
-    The Extended Master Theorem solves recurrence relations of the form:
-
-    \[
-    T(n) = a \cdot T\left(\frac{n}{b}\right) + \Theta\left(n^k (\log n)^i\right)
-    \]
-
+    The Extended Master Theorem is used for solving recurrence relations of the form:
+    
+    ### T(n) = a * T(n/b) + Θ(n^k * (log n)^i)
+    
     Where:
-    - \(a \geq 1\): number of subproblems
-    - \(b > 1\): input size reduction factor
-    - \(k \geq 0\): exponent of \(n\) in combine step
-    - \(i\): exponent of \(\log n\) in combine step
+    - a ≥ 1: number of subproblems
+    - b > 1: factor by which the input size is reduced
+    - k ≥ 0: exponent of n in the combine step
+    - i: exponent of log n in the combine step
     """)
-
+    
     col1, col2 = st.columns(2)
-
+    
     with col1:
-        a = st.number_input("a (number of subproblems)", min_value=1.0, value=2.0, step=1.0, format="%.0f", key="ext_a")
-        b = st.number_input("b (size reduction factor)", min_value=1.1, value=2.0, step=0.1, format="%.2f", key="ext_b")
+        a = st.number_input("a (number of subproblems)", min_value=1.0, value=2.0, step=1.0, key="ext_a")
+        b = st.number_input("b (size reduction factor)", min_value=1.1, value=2.0, step=0.1, key="ext_b")
     with col2:
-        k = st.number_input("k (exponent of n in combine step)", min_value=0.0, value=1.0, step=0.1, format="%.2f", key="ext_k")
-        i = st.number_input("i (exponent of log n in combine step)", value=0.0, step=1.0, format="%.0f", key="ext_i")
-
+        k = st.number_input("k (exponent of n in combine step)", min_value=0.0, value=1.0, step=0.1, key="ext_k")
+        i = st.number_input("i (exponent of log n in combine step)", value=0.0, step=1.0, key="ext_i")
+    
     if st.button("Solve using Extended Master Theorem"):
         try:
             complexity, case, comparison = extended_master_theorem(a, b, k, i)
-
-            st.success(f"**Time Complexity:** {complexity}")
-
+            
+            st.success(f"Time Complexity: {complexity}")
+            
+            # Create explanatory section
             st.subheader("Explanation")
             st.markdown(f"**Case {case}** applies: {comparison}")
 
             log_b_a = math.log(a, b)
-
-            if case == 3:
-                st.markdown("**The recursive work dominates:** Recursive calls contribute more than the combine step.")
-                st.latex(f"\\text{{Since }} \\log_{{{b:.2f}}}({a:.0f}) = {log_b_a:.3f} > {k:.2f}, \\text{{ the time complexity is }} {complexity}")
+            
+            if case == 3:  # Note: case numbers differ between functions and are adjusted here
+                st.markdown("**The recursive work dominates**: The work done by recursive calls is more significant than the combine step.")
+                st.latex(f"\\text{{Since }} \\log_{{{b:.1f}}}({a:.1f}) = {log_b_a:.3f} > {k}, \\text{{ the time complexity is }} {complexity}")
             elif case == 2:
-                st.markdown("**The recursive work and combine step are comparable:** Both contribute equally.")
-                st.latex(f"\\text{{Since }} \\log_{{{b:.2f}}}({a:.0f}) = {log_b_a:.3f} \\approx {k:.2f}, \\text{{ the time complexity is }} {complexity}")
+                st.markdown("**The recursive work and combine step are comparable**: Both contribute equally to the overall complexity.")
+                st.latex(f"\\text{{Since }} \\log_{{{b:.1f}}}({a:.1f}) = {log_b_a:.3f} \\approx {k}, \\text{{ the time complexity is }} {complexity}")
             else:
-                st.markdown("**The combine step dominates:** The combine step work contributes more than recursive calls.")
-                st.latex(f"\\text{{Since }} \\log_{{{b:.2f}}}({a:.0f}) = {log_b_a:.3f} < {k:.2f}, \\text{{ the time complexity is }} {complexity}")
-
+                st.markdown("**The combine step dominates**: The work to combine solutions is more significant than the recursive work.")
+                st.latex(f"\\text{{Since }} \\log_{{{b:.1f}}}({a:.1f}) = {log_b_a:.3f} < {k}, \\text{{ the time complexity is }} {complexity}")
+            
+            # Display recurrence
             st.subheader("Recurrence Relation")
-            st.latex(f"T(n) = {int(a)} \\cdot T\\left(\\frac{{n}}{{{b:.2f}}}\\right) + \\Theta\\left(n^{{{k:.2f}}} (\\log n)^{{{int(i)}}}\\right)")
-
+            st.latex(f"T(n) = {a} \\cdot T(n/{b}) + \\Theta(n^{{{k}}} (\\log n)^{{{i}}})")
+            
         except Exception as e:
             st.error(f"Error solving the recurrence: {str(e)}")
 
@@ -147,49 +144,48 @@ def render_extended_master_theorem():
 def render_subtractive_master_theorem():
     st.header("Subtractive Master Theorem")
     st.markdown("""
-    The Subtractive Master Theorem solves recurrence relations of the form:
-
-    \[
-    T(n) = a \cdot T(n - b) + \Theta(n^k)
-    \]
-
+    The Subtractive Master Theorem is used for solving recurrence relations of the form:
+    
+    ### T(n) = a * T(n-b) + Θ(n^k)
+    
     Where:
-    - \(a\): multiplier for the subproblem
-    - \(b > 0\): amount subtracted from input size
-    - \(k \geq 0\): exponent in the combine step
+    - a: multiplier for the subproblem
+    - b > 0: amount subtracted from input size
+    - k ≥ 0: exponent in the combine step 
     """)
-
+    
     col1, col2, col3 = st.columns(3)
-
+    
     with col1:
-        a = st.number_input("a (subproblem multiplier)", value=2.0, step=0.1, format="%.2f", key="sub_a")
+        a = st.number_input("a (subproblem multiplier)", value=2.0, step=0.1, key="sub_a")
     with col2:
-        b = st.number_input("b (size reduction)", min_value=0.1, value=1.0, step=0.1, format="%.2f", key="sub_b")
+        b = st.number_input("b (size reduction)", min_value=0.1, value=1.0, step=0.1, key="sub_b")
     with col3:
-        k = st.number_input("k (exponent in combine step)", min_value=0.0, value=1.0, step=0.1, format="%.2f", key="sub_k")
-
+        k = st.number_input("k (exponent in combine step)", min_value=0.0, value=1.0, step=0.1, key="sub_k")
+    
     if st.button("Solve using Subtractive Master Theorem"):
         try:
             complexity, case, explanation = subtractive_master_theorem(a, b, k)
-
-            st.success(f"**Time Complexity:** {complexity}")
-
+            
+            st.success(f"Time Complexity: {complexity}")
+            
+            # Create explanatory section
             st.subheader("Explanation")
             st.markdown(f"**Case {case}** applies: {explanation}")
-
+            
             if case == 1:
-                st.markdown("**Combine step dominates:** Recursive calls shrink quickly since \(a < 1\), so the work is dominated by the combine step.")
+                st.markdown("**The combine step dominates**: When a < 1, the recursive calls diminish quickly.")
             elif case == 2:
-                st.markdown("**Linear recurrence:** \(a = 1\) means each recursive level contributes equally, increasing polynomial degree by 1.")
+                st.markdown("**Linear recurrence**: When a = 1, each level contributes equally, increasing the polynomial degree by 1.")
             else:  # case == 3
-                st.markdown("**Exponential growth:** When \(a > 1\), the number of subproblems grows exponentially with recursion depth.")
-
+                st.markdown("**Exponential growth**: When a > 1, the number of subproblems grows exponentially with depth.")
+            
+            # Display recurrence
             st.subheader("Recurrence Relation")
-            st.latex(f"T(n) = {a:.2f} \\cdot T(n - {b:.2f}) + \\Theta(n^{{{k:.2f}}})")
-
+            st.latex(f"T(n) = {a} \\cdot T(n-{b}) + \\Theta(n^{{{k}}})")
+            
         except Exception as e:
             st.error(f"Error solving the recurrence: {str(e)}")
-
 
 # About section
 def render_about():
