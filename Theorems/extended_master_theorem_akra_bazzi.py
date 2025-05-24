@@ -1,64 +1,47 @@
 import math
-from scipy.optimize import fsolve
 
+def extended_master_theorem(a, b, k, i):
+    """
+    Solve recurrence of the form:
+    T(n) = a T(n/b) + Θ(n^k (log n)^i)
+    """
+    log_b_a = math.log(a, b)
 
-def akra_bazzi_method(a_values, b_values, k, p=1):
-    
-    # Check if input lengths match
-    if len(a_values) != len(b_values):
-        return "Error: The number of a and b values must be the same"
-    
-    # Define the function for finding p (characteristic constant)
-    def equation(p):
-        return sum(a * (b ** (-p)) for a, b in zip(a_values, b_values)) - 1
-    
-    # If p is not provided (default=1), solve for p
-    if p == 1:
-        try:
-            # Solve the characteristic equation to find p
-            p = fsolve(equation, 0.5)[0]
-        except:
-            return "Error: Could not solve for the characteristic constant p"
-    
-    # Determine the complexity based on the Akra-Bazzi theorem
-    if k < p:
-        complexity = f"O(n^{p:.3f})"
-        comparison = f"k = {k} < p = {p:.3f}"
-    elif k == p:
-        complexity = f"O(n^{p:.3f} log n)"
-        comparison = f"k = {p:.3f} = p"
-    else:  # k > p
-        complexity = f"O(n^{k})"
-        comparison = f"k = {k} > p = {p:.3f}"
-    
-    return complexity, p, comparison
-
-
-def print_akra_bazzi_result(a_values, b_values, k, p=1):
-
-    try:
-        complexity, p_value, comparison = akra_bazzi_method(a_values, b_values, k, p)
-        
-        # Print the recurrence relation
-        relation = "T(n) = "
-        for i in range(len(a_values)):
-            relation += f"{a_values[i]}T(n/{b_values[i]}) + "
-        relation += f"Θ(n^{k})"
-        
-        print(f"Recurrence relation: {relation}")
-        print(f"Characteristic constant p = {p_value:.3f}")
-        print(f"Comparison: {comparison}")
-        print(f"Time complexity: {complexity}")
-        
-        # Additional explanation
-        if k < p_value:
-            print("The subproblems dominate.")
-        elif k == p_value:
-            print("The subproblems and the combine step contribute equally.")
+    if log_b_a > k:
+        complexity = f"O(n^{log_b_a:.3f})"
+        case = 1
+        comparison = f"log_{b}({a}) = {log_b_a:.3f} > k = {k}"
+    elif math.isclose(log_b_a, k):
+        if i > -1:
+            complexity = f"O(n^{k} (log n)^{i+1})"
+            case = 2
+            comparison = f"log_{b}({a}) = {log_b_a:.3f} ≈ k = {k}, i = {i} > -1"
+        elif i == -1:
+            complexity = f"O(n^{k} log log n)"
+            case = 2
+            comparison = f"log_{b}({a}) = {log_b_a:.3f} ≈ k = {k}, i = {i}"
         else:
-            print("The combine step dominates.")
-            
-    except Exception as e:
-        print(f"Could not apply the Akra-Bazzi method: {e}")
-        print("Note: The Akra-Bazzi method requires the scipy library for solving equations.")
-        print("Install it with: pip install scipy")
+            complexity = f"O(n^{k})"
+            case = 2
+            comparison = f"log_{b}({a}) = {log_b_a:.3f} ≈ k = {k}, i = {i} < -1"
+    else:
+        complexity = f"O(n^{k} (log n)^{i})"
+        case = 3
+        comparison = f"log_{b}({a}) = {log_b_a:.3f} < k = {k}"
+
+    return complexity, case, comparison
+
+
+def print_extended_master_result(a, b, k, i):
+    complexity, case, comparison = extended_master_theorem(a, b, k, i)
+    
+    print(f"Recurrence relation: T(n) = {a} T(n/{b}) + Θ(n^{k} (log n)^{i})")
+    print(f"Extended Master Theorem Case {case} applies: {comparison}")
+    print(f"Time complexity: {complexity}")
+
+    if case == 1:
+        print("Case 1: The subproblems dominate.")
+    elif case == 2:
+        print("Case 2: The subproblems and the combine step contribute equally.")
+    else:
+        print("Case 3: The combine step dominates.")
